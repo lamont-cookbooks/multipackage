@@ -15,13 +15,13 @@ define :multipackage do
         end
       end
 
-  t.package_name.concat(package_name) if package_name
-
-  if version
-    t.version.concat(version)
-  else
-    # keep the version array matching the package_name array
-    package_name.length.times do
+  package_name.each_with_index do |package_name, i|
+    next if t.package_name.include?(package_name)  # supress CHEF-3694 errors
+    t.package_name.push(package_name)
+    if version
+      t.version.push version[i]
+    else
+      # keep the version array matching the package_name array
       t.version.push nil
     end
   end
