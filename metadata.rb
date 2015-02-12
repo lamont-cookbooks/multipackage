@@ -1,0 +1,7 @@
+maintainer       "Lamont Granquist"
+maintainer_email "lamont@scriptkiddie.org"
+license          "Apache 2.0"
+description      "Installation of multiple packages collected cross multiple cookbooks with a single package resource."
+long_description      "Installation of multiple packages collected cross multiple cookbooks with a single package resource."
+version          "1.0.0"
+name             "multipackage"
