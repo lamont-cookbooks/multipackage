@@ -1,5 +1,12 @@
 # Multipackage Cookbook
 
+## Chef Package Installation Nirvana
+
+* Leverages Chef 12.1.0 multipackage installation
+* Back-compat with earlier chef versions
+* Accumulate packages across all cookbooks and install with one resource
+* Duplicated packages do not generate CHEF-3694 resource cloning errors
+
 ## Description
 
 This cookbook supplies an LWRP `multipackage_install` which provides a backwards-compatability
