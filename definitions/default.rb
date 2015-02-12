@@ -1,9 +1,8 @@
 
 define :multipackage do
-  # @todo make sure package_name and version are arrays
   # @todo make sure package_name and version have the same # of items (unless verison is omitted)
-  package_name = params[:package_name] || params[:name]
-  version      = params[:version]
+  package_name = [ params[:package_name] || params[:name] ].flatten
+  version      = [ params[:version] ].flatten if params[:version]
   options      = params[:options]
   timeout      = params[:timeout]
 
