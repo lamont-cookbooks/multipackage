@@ -56,7 +56,10 @@ end
 ### multipackage
 
 This implements an accumulator pattern to gather all its arguments across every cookbook and issue a single
-`multipackage_install` resource to install all of the gathered packages.
+`multipackage_install` resource to install all of the gathered packages.  The resource will be placed in the
+resource collection at the point where the first definition is encountered -- in other words it will run very early
+in converge phase as opposed to being implemented as a delayed notification which would run too late for 
+cookbooks to depend upon the packages being installed.
 
 #### Example
 
@@ -102,6 +105,22 @@ None
 ## Usage
 
 Put 'depends multipackage' in your metadata.rb to gain access to the LWRP and definition in your code.
+
+## NOTE on Using Definitions
+
+This cookbook uses a definition for a specific purpose to implement an accumulator or scatter-gather pattern so that
+many statements across multiple recipes and cookbooks produce one resource which is executed.  This is done with a
+definition so that the accumulating/gathering process occurs at compile-time.  When compile-time is finished all of
+the data has been accumulated.  This lets a resource run very early in the run-list and do its work early.
+
+If this was implemented as an LWRP it would have to do its accumulation work late, at converge time in the provider
+That would make it impossible to install the packages early.  An LWRP implementation is possible in conjunction with a
+delayed notification to a resource to consume the accumulated data, but then recipe code could not depend on the
+packages having been installed.  Since a definition is a compile-time macro this cookbook takes advantage of that
+distinction to more elegantly solve this problem without forcing providers to run at compile_time which is more of
+an antipattern than definitions are.
+
+In general LWRPs should always be used over definitions.  This is the one case where they should be used.
 
 ## Bugs
 
