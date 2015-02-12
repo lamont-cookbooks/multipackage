@@ -129,11 +129,12 @@ an antipattern than definitions are.
 
 In general LWRPs should always be used over definitions.  This is the one case where they should be used.
 
-## Bugs
+## Bugs and Edge Conditions
 
 - options could be merged in the definition
 - timeout could update the timeout in the definition only if its larger than the current one or something like that
-- there's other paramters to package, yum_package, etc that are not implemented
+- there's other parameters to `package`, `yum_package`, etc that are not implemented
+- to suppress CHEF-3694 errors the first declaration of installing a package 'wins' with regards to options/version/etc
 
 ## Contributing
 
