@@ -39,12 +39,29 @@ resource it will explode the `package_name` argument into multiple package resou
 
 #### Example
 
+This installs three packages and shows the parameters which the definition supports:
+
 ```ruby
 multipackage_install [ "lsof, "tcpdump", "zsh" ] do
   version [ "1.1.1", "2.2.2", "3.3.3" ]
   options { "some" => "options" }
   timeout 86400
 end
+```
+
+The definition with no arguments will create the `multipackage_install` resource in the resource collection at the
+point where this line is evaluated (if this is the first recipe line your chef client run parses, then the first thing
+that will happen in your chef-client run is that all packages will be installed):
+
+```ruby
+multipackage
+```
+
+In Chef 12 (Chef-11 definitions do not support this behavior) this definition returns the resource it creates so you
+can hang notifies and subscribes off of if:
+
+```ruby
+multipackage.notifies :write, "log[foo]", :immediately
 ```
 
 #### Actions
@@ -124,8 +141,11 @@ If this was implemented as an LWRP it would have to do its accumulation work lat
 That would make it impossible to install the packages early.  An LWRP implementation is possible in conjunction with a
 delayed notification to a resource to consume the accumulated data, but then recipe code could not depend on the
 packages having been installed.  Since a definition is a compile-time macro this cookbook takes advantage of that
-distinction to more elegantly solve this problem without forcing providers to run at compile_time which is more of
+distinction to more elegantly solve this problem without forcing providers to run at `compile_time` which is more of
 an antipattern than definitions are.
+
+Definitions also do not have a "CHEF-3694" "resource cloning" issue.  That makes it easy for the definition to roll its
+own logic to handle collisions.
 
 In general LWRPs should always be used over definitions.  This is the one case where they should be used.
 
@@ -142,7 +162,7 @@ Just open a PR or Issue on GitHub.
 
 ## License and Author
 
-- Author:: Lamont Granquist (<lamont@scriptkiddie.org>)
+- Author:: Lamont Granquist (<lamont@chef.io>)
 
 ```text
 Copyright:: 2015 Lamont Granquist

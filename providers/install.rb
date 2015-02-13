@@ -4,6 +4,7 @@ use_inline_resources
 action :install do
   package_name_array = [ new_resource.package_name ].flatten
   version_array = [ new_resource.version ].flatten if new_resource.version
+
   begin
     package new_resource.name do
       package_name package_name_array
