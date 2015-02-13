@@ -49,21 +49,6 @@ multipackage_install [ "lsof, "tcpdump", "zsh" ] do
 end
 ```
 
-The definition with no arguments will create the `multipackage_install` resource in the resource collection at the
-point where this line is evaluated (if this is the first recipe line your chef client run parses, then the first thing
-that will happen in your chef-client run is that all packages will be installed):
-
-```ruby
-multipackage
-```
-
-In Chef 12 (Chef-11 definitions do not support this behavior) this definition returns the resource it creates so you
-can hang notifies and subscribes off of if:
-
-```ruby
-multipackage.notifies :write, "log[foo]", :immediately
-```
-
 #### Actions
 
 - `:install` - install the packages
@@ -87,6 +72,8 @@ cookbooks to depend upon the packages being installed.
 
 #### Example
 
+On Chef >= 12.1.0 and Ubuntu/RHEL these files will result in a single resource that installs all 4 packages at once.
+
 In `my_zlib/default.rb`:
 
 ```ruby
@@ -105,7 +92,20 @@ In `my_xml/default.rb`:
 multipackage [ "xml2-dev", "xslt-dev" ]
 ```
 
-On Chef >= 12.1.0 and Ubuntu/RHEL this will result in a single resource that installs all 4 packages at once.
+The definition with no arguments will create the `multipackage_install` resource in the resource collection at the
+point where this line is evaluated (if this is the first recipe line your chef client run parses, then the first thing
+that will happen in your chef-client run is that all packages will be installed):
+
+```ruby
+multipackage
+```
+
+In Chef 12 (Chef-11 definitions do not support this behavior) this definition returns the resource it creates so you
+can hang notifies and subscribes off of if:
+
+```ruby
+multipackage.notifies :write, "log[foo]", :immediately
+```
 
 #### Actions
 
