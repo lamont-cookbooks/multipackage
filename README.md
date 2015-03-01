@@ -9,13 +9,13 @@
 
 ## Description
 
-This cookbook supplies an LWRP `multipackage_install` which provides a backwards-compatability
+This cookbook supplies an LWRP `multipackage` which provides a backwards-compatability
 layer around supplying an array of packages to the package resource which was introduced in 
 Chef 12.1.0.  By using this LWRP a cookbook will execute a single resource with an array argument
 on Chef 12.1.0, but will dispatch multiple resources to handle each individual resource to maintain
 compatibility with previous versions of Chef.
 
-This cookbook also supplies a definition `multipackage` which wraps `multipackage_install` with
+This cookbook also supplies a definition `multipackage_install` which wraps `multipackage` with
 additional functionality not present in core chef which implements an accumulator pattern to
 gather packages from many different cookbooks and install them in a single resource call (assuming
 it runs on Chef 12.1.0 or greater).
@@ -32,7 +32,7 @@ None
 
 ## Resources
 
-### multipackage_install
+### multipackage
 
 This takes an array of packages and installs them.  On chef versions that do not support array arguments to the package
 resource it will explode the `package_name` argument into multiple package resources for backwards compatibility.
@@ -42,7 +42,7 @@ resource it will explode the `package_name` argument into multiple package resou
 This installs three packages and shows the parameters which the definition supports:
 
 ```ruby
-multipackage_install [ "lsof, "tcpdump", "zsh" ] do
+multipackage [ "lsof, "tcpdump", "zsh" ] do
   version [ "1.1.1", "2.2.2", "3.3.3" ]
   options { "some" => "options" }
   timeout 86400
@@ -52,6 +52,10 @@ end
 #### Actions
 
 - `:install` - install the packages
+- `:remove` - remove the packages
+- `:upgrade` - upgrade the packages
+- `:reconfig` - reconfigure the packages
+- `:purge` - purge the packages
 
 #### Parameters
 
@@ -62,10 +66,10 @@ end
 
 ## Definitions
 
-### multipackage
+### multipackage_install
 
 This implements an accumulator pattern to gather all its arguments across every cookbook and issue a single
-`multipackage_install` resource to install all of the gathered packages.  The resource will be placed in the
+`multipackage` resource to install all of the gathered packages.  The resource will be placed in the
 resource collection at the point where the first definition is encountered -- in other words it will run very early
 in converge phase as opposed to being implemented as a delayed notification which would run too late for 
 cookbooks to depend upon the packages being installed.
@@ -77,19 +81,19 @@ On Chef >= 12.1.0 and Ubuntu/RHEL these files will result in a single resource t
 In `my_zlib/default.rb`:
 
 ```ruby
-multipackage "zlib-dev"
+multipackage_install "zlib-dev"
 ```
 
 In `my_zsh/default.rb`:
 
 ```ruby
-multipackage "zsh"
+multipackage_install "zsh"
 ```
 
 In `my_xml/default.rb`:
 
 ```ruby
-multipackage [ "xml2-dev", "xslt-dev" ]
+multipackage_install [ "xml2-dev", "xslt-dev" ]
 ```
 
 The definition with no arguments will create the `multipackage_install` resource in the resource collection at the
@@ -97,19 +101,15 @@ point where this line is evaluated (if this is the first recipe line your chef c
 that will happen in your chef-client run is that all packages will be installed):
 
 ```ruby
-multipackage
+multipackage_install
 ```
 
 In Chef 12 (Chef-11 definitions do not support this behavior) this definition returns the resource it creates so you
 can hang notifies and subscribes off of if:
 
 ```ruby
-multipackage.notifies :write, "log[foo]", :immediately
+multipackage_install.notifies :write, "log[foo]", :immediately
 ```
-
-#### Actions
-
-- `:install` - Setup the symlinks
 
 #### Parameters
 

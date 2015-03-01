@@ -1,5 +1,5 @@
 
-define :multipackage do
+define :multipackage_install do
   # @todo make sure package_name and version have the same # of items (unless verison is omitted)
   package_name = [ params[:package_name] || params[:name] ].flatten if params[:package_name] || params[:name]
   package_name ||= []
