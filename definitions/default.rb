@@ -8,9 +8,9 @@ define :multipackage_install do
   timeout      = params[:timeout]
 
   t = begin
-        resources(multipackage_install: "collected packages")
+        resources(multipackage: "collected packages")
       rescue Chef::Exceptions::ResourceNotFound
-        multipackage_install "collected packages" do
+        multipackage "collected packages" do
           package_name Array.new
           version Array.new
         end
