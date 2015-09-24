@@ -33,7 +33,7 @@ def do_action(new_resource, action)
       action action
     end
   rescue Chef::Exceptions::ValidationFailed
-    new_resource.package_name.each_with_index do |package_name, i|
+    new_resource.package_name_array.each_with_index do |package_name, i|
       version = version_array[i] if version_array
       package package_name do
         version version if version
