@@ -1,19 +1,20 @@
-
 # definitions are the right way to do an accumulator pattern
-define :multipackage_install do # ~FC015
+define :multipackage do # ~FC015
   # @todo make sure package_name and version have the same # of items (unless verison is omitted)
   package_name = [ params[:package_name] || params[:name] ].flatten if params[:package_name] || params[:name]
   package_name ||= []
-  version      = [ params[:version] ].flatten if params[:version]
-  options      = params[:options]
-  timeout      = params[:timeout]
+  version = [ params[:version] ].flatten if params[:version]
+  options = params[:options]
+  timeout = params[:timeout]
+  action = params[:action] || :install
 
   t = begin
-        resources(multipackage: "collected packages")
+        resources(multipackage_internal: "collected packages #{action}")
       rescue Chef::Exceptions::ResourceNotFound
-        multipackage "collected packages" do
+        multipackage_internal "collected packages #{action}" do
           package_name Array.new
           version Array.new
+          action action
         end
       end
 
