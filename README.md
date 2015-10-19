@@ -1,5 +1,8 @@
 # Multipackage Cookbook
 
+[![Build Status](https://travis-ci.org/lamont-cookbooks/multipackage.svg?branch=master)](https://travis-ci.org/lamont-cookbooks/multipackage)
+[![Cookbook Version](https://img.shields.io/cookbook/v/multipackage.svg)](https://supermarket.chef.io/cookbooks/multipackage)
+
 ## Chef Package Installation Nirvana
 
 * Leverages Chef 12.1.0 multipackage installation
