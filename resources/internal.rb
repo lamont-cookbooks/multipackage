@@ -1,4 +1,3 @@
-actions [ :install, :upgrade, :reconfig, :remove, :purge ]
 default_action :install
 
 attribute :package_name, kind_of: [ String, Array ], name_attribute: true
