@@ -33,6 +33,7 @@ before_script:
   - which ruby
   - which gem
   - bundle install --jobs=3 --retry=3
+  - gem which mixlib/shellout
 #  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
 script:
   - /opt/chefdk/embedded/bin/chef --version
