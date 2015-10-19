@@ -57,7 +57,7 @@ def do_action(new_resource, action)
 
   if multipackage_supported?
     begin
-      multipackage_resource(new_resoure, action)
+      multipackage_resource(new_resource, action)
     rescue Chef::Exceptions::ValidationFailed
       singlepackage_resources(new_resource, action)
     end
