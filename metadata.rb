@@ -7,3 +7,5 @@ description      "Installation of multiple packages collected cross multiple coo
 long_description "Installation of multiple packages collected cross multiple cookbooks with a single package resource."
 version          "3.0.0"
 name             "multipackage"
+
+depends "compat_resource"
