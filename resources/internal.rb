@@ -1,3 +1,6 @@
+# need build_resource
+include Chef::DSL::Recipe
+
 default_action :install
 
 property :package_name, [ String, Array ], name_property: true
