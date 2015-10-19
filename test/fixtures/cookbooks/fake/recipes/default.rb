@@ -8,35 +8,35 @@ end
 
 Chef::Resource::RubyBlock.send(:include, MultiPackageHelper)
 
-multipackage [ "bash", "tcsh" ]
+multipackage %w[bash tcsh]
 
-multipackage_install [ "bash", "zsh" ]
+multipackage_install %w[bash zsh]
 
 ruby_block "validate packages installed 1" do
   block do
-    %w{bash tcsh zsh}.each do |pkg|
+    %w[bash tcsh zsh].each do |pkg|
       raise "#{pkg} not installed" unless package_installed?(pkg)
     end
   end
 end
 
-multipackage [ "tcsh", "zsh" ] do
+multipackage %w[tcsh zsh] do
   action :remove
 end
 
 ruby_block "validate packages removed 1" do
   block do
-    %w{tcsh zsh}.each do |pkg|
+    %w[tcsh zsh].each do |pkg|
       raise "#{pkg} not removed" if package_installed?(pkg)
     end
   end
 end
 
-multipackage_internal [ "bash", "tcsh", "zsh" ]
+multipackage_internal %w[bash tcsh zsh]
 
 ruby_block "validate packages installed 2" do
   block do
-    %w{bash tcsh zsh}.each do |pkg|
+    %w[bash tcsh zsh].each do |pkg|
       raise "#{pkg} not installed" unless package_installed?(pkg)
     end
   end
