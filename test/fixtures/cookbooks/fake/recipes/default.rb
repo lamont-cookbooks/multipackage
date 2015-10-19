@@ -8,13 +8,17 @@ end
 
 Chef::Resource::RubyBlock.send(:include, MultiPackageHelper)
 
-multipackage %w[bash tcsh]
+package_list_one = %w[tcpdump unzip]
+package_list_two = %w[vim zsh]
+package_list = package_list_one + package_list_two
 
-multipackage_install %w[bash zsh]
+multipackage package_list_one
+
+multipackage_install package_list_two
 
 ruby_block "validate packages installed 1" do
   block do
-    %w[bash tcsh zsh].each do |pkg|
+    package_list.each do |pkg|
       raise "#{pkg} not installed" unless package_installed?(pkg)
     end
   end
@@ -22,30 +26,30 @@ end
 
 if %w[rhel fedora].include?(node["platform_family"])
   # yum multipackage remove is buggy
-  %w[tcsh zsh].each do |pkg|
+  package_list.each do |pkg|
     package pkg do
       action :remove
     end
   end
 else
-  multipackage %w[tcsh zsh] do
+  multipackage package_list do
     action :remove
   end
 end
 
 ruby_block "validate packages removed 1" do
   block do
-    %w[tcsh zsh].each do |pkg|
+    package_list.each do |pkg|
       raise "#{pkg} not removed" if package_installed?(pkg)
     end
   end
 end
 
-multipackage_internal %w[bash tcsh zsh]
+multipackage_internal package_list
 
 ruby_block "validate packages installed 2" do
   block do
-    %w[bash tcsh zsh].each do |pkg|
+    package_list.each do |pkg|
       raise "#{pkg} not installed" unless package_installed?(pkg)
     end
   end
