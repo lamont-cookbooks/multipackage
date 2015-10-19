@@ -38,6 +38,8 @@ end
 
 # FIXME: can we get rid of new_resource everywhere?
 def multipackage_resource(new_resource, action)
+  package_name_array = package_name_array
+  version_array = version_array
   package new_resource.name do
     package_name package_name_array
     version version_array if version_array
@@ -48,6 +50,8 @@ def multipackage_resource(new_resource, action)
 end
 
 def singlepackage_resource(new_resource, action)
+  package_name_array = package_name_array
+  version_array = version_array
   new_resource.package_name.each_with_index do |package_name, i|
     version = version_array[i] if version_array
     package package_name do
