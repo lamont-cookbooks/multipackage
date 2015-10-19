@@ -1,9 +1,9 @@
 default_action :install
 
 property :package_name, [ String, Array ], name_property: true
-attribute :version, [ String, Array ]
-attribute :options, String
-attribute :timeout, [ String, Integer ]
+property :version, [ String, Array ]
+property :options, String
+property :timeout, [ String, Integer ]
 
 action :install do
   do_action(new_resource, :install)
