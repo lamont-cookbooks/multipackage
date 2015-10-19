@@ -51,10 +51,15 @@ def singlepackage_resource(new_resource, action)
   end
 end
 
-def do_action(new_resource, action)
-  package_name_array = [ new_resource.package_name ].flatten
-  version_array = [ new_resource.version ].flatten if new_resource.version
+def package_name_array
+  @package_name_array ||= [ new_resource.package_name ].flatten
+end
 
+def version_array
+  @version_array ||= [ new_resource.version ].flatten if new_resource.version
+end
+
+def do_action(new_resource, action)
   if multipackage_supported?
     begin
       multipackage_resource(new_resource, action)
