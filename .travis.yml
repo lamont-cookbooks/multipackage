@@ -1,8 +1,11 @@
 language: ruby
-cache: bundler
+cache:
+  directories:
+    - $HOME/.chefdk
 
 rvm: 2.2
 
+# sudo required for hacky docker iptables fix
 sudo: required
 
 # install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
@@ -14,10 +17,6 @@ addons:
       - chefdk
 
 services: docker
-
-cache:
-  directories:
-  - $HOME/.chefdk
 
 env:
   matrix:
