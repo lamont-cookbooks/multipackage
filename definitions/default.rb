@@ -34,8 +34,11 @@ define :multipackage do # ~FC015
     end
   end
 
+
   t.options(options) if options
   t.timeout(timeout) if timeout
+
+  pp t
 
   t
 end
