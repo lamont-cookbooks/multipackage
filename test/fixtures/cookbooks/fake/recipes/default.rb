@@ -20,8 +20,17 @@ ruby_block "validate packages installed 1" do
   end
 end
 
-multipackage %w[tcsh zsh] do
-  action :remove
+if %w[rhel fedora].include?(node['platform_family'])
+  # yum multipackage remove is buggy
+  %w[tcsh zsh].each do |pkg|
+    package pkg do
+      action :remove
+    end
+  end
+else
+  multipackage %w[tcsh zsh] do
+    action :remove
+  end
 end
 
 ruby_block "validate packages removed 1" do
