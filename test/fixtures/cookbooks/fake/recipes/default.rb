@@ -1,0 +1,2 @@
+
+multipackage [ "bash", "tcsh", "zsh" ]
