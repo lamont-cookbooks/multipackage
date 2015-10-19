@@ -15,6 +15,10 @@ addons:
 
 services: docker
 
+cache:
+  directories:
+  - .chefdk
+
 env:
   matrix:
   - INSTANCE=default-ubuntu-1404
