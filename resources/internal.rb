@@ -30,24 +30,16 @@ action :purge do
   do_action(new_resource, :purge)
 end
 
-def package_name_array
-  [ package_name ].flatten
-end
-
-def version_array
-  [ version ].flatten if version
-end
-
 # FIXME: can we get rid of new_resource everywhere?
 def multipackage_resource(new_resource, action)
   puts "NEW_RESOURCE:"
   pp new_resource
   puts "PACKAGE_NAME:"
   pp new_resource.package_name
-  package_name_array = package_name_array
+  package_name_array = [ new_resource.package_name ].flatten
   puts "PACKAGE_NAME_ARRAY:"
   pp package_name_array
-  version_array = version_array
+  version_array = [ new_resource.version ].flatten if new_resource.version
   package new_resource.name do
     package_name package_name_array
     version version_array if version_array
