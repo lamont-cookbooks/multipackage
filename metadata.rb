@@ -5,7 +5,7 @@ source_url       "https://github.com/lamont-cookbooks/multipackage"
 issues_url       "https://github.com/lamont-cookbooks/multipackage/issues"
 description      "Installation of multiple packages collected cross multiple cookbooks with a single package resource."
 long_description "Installation of multiple packages collected cross multiple cookbooks with a single package resource."
-version          "3.0.13"
+version          "3.0.14"
 name             "multipackage"
 
 depends "compat_resource"
