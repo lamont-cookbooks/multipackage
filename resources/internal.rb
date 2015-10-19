@@ -29,11 +29,11 @@ action :purge do
 end
 
 def package_name_array
-  @package_name_array ||= [ new_resource.package_name ].flatten
+  [ new_resource.package_name ].flatten
 end
 
 def version_array
-  @version_array ||= [ new_resource.version ].flatten if new_resource.version
+  [ new_resource.version ].flatten if new_resource.version
 end
 
 # FIXME: can we get rid of new_resource everywhere?
