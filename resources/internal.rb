@@ -43,7 +43,7 @@ def multipackage_resource(new_resource, action)
   end
 end
 
-def singlepackage_resource(new_resource, action)
+def singlepackage_resources(new_resource, action)
   package_name_array = package_name.is_a?(Array) ? package_name : package_name.split(", ")
   version_array = [new_resource.version].flatten if new_resource.version
   package_name_array.each_with_index do |package_name, i|
