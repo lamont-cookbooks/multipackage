@@ -9,3 +9,5 @@ version          "3.0.3"
 name             "multipackage"
 
 depends "compat_resource"
+
+chef_version ">= 12.0.0" if respond_to?(:chef_version)
