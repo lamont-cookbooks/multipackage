@@ -3,6 +3,8 @@ include Chef::DSL::Recipe
 
 default_action :install
 
+provides :multipackage_internal
+
 property :package_name, [ String, Array ], name_property: true
 property :version, [ String, Array ]
 property :options, String
