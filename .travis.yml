@@ -17,7 +17,7 @@ services: docker
 
 cache:
   directories:
-  - .chefdk
+  - $HOME/.chefdk
 
 env:
   matrix:
