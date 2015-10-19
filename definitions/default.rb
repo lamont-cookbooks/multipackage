@@ -1,4 +1,3 @@
-# definitions are the right way to do an accumulator pattern
 define :multipackage do # ~FC015
   multipackage_definition_impl(params)
 end
