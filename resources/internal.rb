@@ -40,6 +40,10 @@ end
 
 # FIXME: can we get rid of new_resource everywhere?
 def multipackage_resource(new_resource, action)
+  puts "NEW_RESOURCE:"
+  pp new_resource
+  puts "PACKAGE_NAME:"
+  pp new_resource.package_name
   package_name_array = package_name_array
   version_array = version_array
   package new_resource.name do
