@@ -45,6 +45,8 @@ def multipackage_resource(new_resource, action)
   puts "PACKAGE_NAME:"
   pp new_resource.package_name
   package_name_array = package_name_array
+  puts "PACKAGE_NAME_ARRAY:"
+  pp package_name_array
   version_array = version_array
   package new_resource.name do
     package_name package_name_array
