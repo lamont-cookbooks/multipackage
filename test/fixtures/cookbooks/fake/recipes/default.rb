@@ -9,7 +9,7 @@ end
 Chef::Resource::RubyBlock.send(:include, MultiPackageHelper)
 
 package_list_one = %w[tcpdump unzip]
-package_list_two = %w[vim zsh]
+package_list_two = %w[lsof zsh]
 package_list = package_list_one + package_list_two
 
 multipackage package_list_one
@@ -24,17 +24,8 @@ ruby_block "validate packages installed 1" do
   end
 end
 
-if %w[rhel fedora].include?(node["platform_family"])
-  # yum multipackage remove is buggy
-  package_list.each do |pkg|
-    package pkg do
-      action :remove
-    end
-  end
-else
-  multipackage package_list do
-    action :remove
-  end
+multipackage package_list do
+  action :remove
 end
 
 ruby_block "validate packages removed 1" do
