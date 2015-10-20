@@ -71,5 +71,6 @@ end
 
 def multipackage_supported?
   test = build_resource(:package, "anything")
-  test.is_a?(Chef::Resource::YumPackage) || test.is_a?(Chef::Resource::AptPackage)
+  ( test.is_a?(Chef::Resource::YumPackage) && !action == :remove) ||
+    test.is_a?(Chef::Resource::AptPackage)
 end
