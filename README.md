@@ -6,19 +6,27 @@
 ## Chef Package Installation Nirvana
 
 * Leverages Chef 12.1.0 multipackage installation
-* Back-compat with earlier chef versions
+* Back-compat with Chef 12.0.x
+* Compatible with package provider that do not support multipackage
 * Accumulate packages across all cookbooks and install with one resource
 * Duplicated packages do not generate CHEF-3694 resource cloning errors
 
+## Chef 11.x Compat
+
+* The last version of this that supported Chef 11.x was 2.0.4
+
+Note that in that version you have to use `multipackage_install` to do scatter-gather and `multipackage`
+is the resource which was renamed to `multipackage_internal`.
+
 ## Description
 
-This cookbook supplies an LWRP `multipackage` which provides a backwards-compatability
+This cookbook supplies an LWRP `multipackage_internal` which provides a backwards-compatability
 layer around supplying an array of packages to the package resource which was introduced in 
 Chef 12.1.0.  By using this LWRP a cookbook will execute a single resource with an array argument
 on Chef 12.1.0, but will dispatch multiple resources to handle each individual resource to maintain
 compatibility with previous versions of Chef.
 
-This cookbook also supplies a definition `multipackage_install` which wraps `multipackage` with
+This cookbook also supplies a definition `multipackage` which wraps `multipackage` with
 additional functionality not present in core chef which implements an accumulator pattern to
 gather packages from many different cookbooks and install them in a single resource call (assuming
 it runs on Chef 12.1.0 or greater).
@@ -35,7 +43,7 @@ None
 
 ## Resources
 
-### multipackage
+### multipackage_internal
 
 This takes an array of packages and installs them.  On chef versions that do not support array arguments to the package
 resource it will explode the `package_name` argument into multiple package resources for backwards compatibility.
@@ -45,7 +53,7 @@ resource it will explode the `package_name` argument into multiple package resou
 This installs three packages and shows the parameters which the definition supports:
 
 ```ruby
-multipackage [ "lsof, "tcpdump", "zsh" ] do
+multipackage_internal [ "lsof, "tcpdump", "zsh" ] do
   version [ "1.1.1", "2.2.2", "3.3.3" ]
   options { "some" => "options" }
   timeout 86400
@@ -69,10 +77,10 @@ end
 
 ## Definitions
 
-### multipackage_install
+### multipackage
 
 This implements an accumulator pattern to gather all its arguments across every cookbook and issue a single
-`multipackage` resource to install all of the gathered packages.  The resource will be placed in the
+`multipackage_internal` resource to install all of the gathered packages.  The resource will be placed in the
 resource collection at the point where the first definition is encountered -- in other words it will run very early
 in converge phase as opposed to being implemented as a delayed notification which would run too late for 
 cookbooks to depend upon the packages being installed.
@@ -84,34 +92,34 @@ On Chef >= 12.1.0 and Ubuntu/RHEL these files will result in a single resource t
 In `my_zlib/default.rb`:
 
 ```ruby
-multipackage_install "zlib-dev"
+multipackage "zlib-dev"
 ```
 
 In `my_zsh/default.rb`:
 
 ```ruby
-multipackage_install "zsh"
+multipackage "zsh"
 ```
 
 In `my_xml/default.rb`:
 
 ```ruby
-multipackage_install [ "xml2-dev", "xslt-dev" ]
+multipackage [ "xml2-dev", "xslt-dev" ]
 ```
 
-The definition with no arguments will create the `multipackage_install` resource in the resource collection at the
+The definition with no arguments will create the `multipackage_internal` resource in the resource collection at the
 point where this line is evaluated (if this is the first recipe line your chef client run parses, then the first thing
 that will happen in your chef-client run is that all packages will be installed):
 
 ```ruby
-multipackage_install
+multipackage
 ```
 
 In Chef 12 (Chef-11 definitions do not support this behavior) this definition returns the resource it creates so you
 can hang notifies and subscribes off of if:
 
 ```ruby
-multipackage_install.notifies :write, "log[foo]", :immediately
+multipackage.notifies :write, "log[foo]", :immediately
 ```
 
 #### Parameters
