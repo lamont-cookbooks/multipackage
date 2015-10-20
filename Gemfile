@@ -1,11 +1,7 @@
 source "https://rubygems.org"
 
 gem "chef", ">= 12.5.1"
-
-group :rake do
-  gem "rake"
-  gem "tomlrb"
-end
+gem "stove", ">= 3.2.7"
 
 group :lint do
   gem "foodcritic", ">= 5.0.0"
