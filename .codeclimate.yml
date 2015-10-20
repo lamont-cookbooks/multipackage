@@ -1,0 +1,7 @@
+engines:
+  foodcritic:
+    enabled: true
+# this repo prefers finstyle over rubocop
+ratings:
+  paths:
+  - "**.rb"

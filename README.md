@@ -1,6 +1,7 @@
 # Multipackage Cookbook
 
 [![Build Status](https://travis-ci.org/lamont-cookbooks/multipackage.svg?branch=master)](https://travis-ci.org/lamont-cookbooks/multipackage)
++[![Code Climate](https://codeclimate.com/github/lamont-cookbooks/multipackage/badges/gpa.svg)](https://codeclimate.com/github/lamont-cookbooks/multipackage)
 [![Cookbook Version](https://img.shields.io/cookbook/v/multipackage.svg)](https://supermarket.chef.io/cookbooks/multipackage)
 
 ## Chef Package Installation Nirvana
