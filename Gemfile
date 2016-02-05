@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "chef", ">= 12.5.1"
 gem "stove", ">= 3.2.7"
+gem "knife-spork"
 
 group :lint do
   gem "foodcritic", ">= 5.0.0"
