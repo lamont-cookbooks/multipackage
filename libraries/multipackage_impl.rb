@@ -1,24 +1,54 @@
-define :multipackage do # ~FC015
-  multipackage_definition_impl(params)
-end
+class MultipackageMash < BasicObject
+  def initialize
+    @__object = {}
+  end
 
-define :multipackage_install do # ~FC015
-  Chef::Log.deprecation(
-    "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
-  )
-  params[:action] = :install
-  multipackage_definition_impl(params)
-end
+  def []=(key, value)
+    @__object[key] = value
+  end
 
-define :multipackage_remove do # ~FC015
-  Chef::Log.deprecation(
-    "The `multipackage_remove` definition is deprecated, just use `multipackage` from now on"
-  )
-  params[:action] = :remove
-  multipackage_definition_impl(params)
+  def [](key)
+    @__object[key]
+  end
+
+  def method_missing(sym, *args)
+    @__object[sym] = ( args.length == 1 ? args[0] : args )
+  end
 end
 
 module MultipackageDefinitionImpl
+  def multipackage(name, &block)
+    params = get_params(&block)
+    params[:name] = name
+    multipackage_definition_impl(params)
+  end
+
+  def multipackage_install(name, &block)
+    Chef::Log.deprecation(
+      "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
+    )
+    params = get_params(&block)
+    params[:name] = name
+    params[:action] = :install
+    multipackage_definition_impl(params)
+  end
+
+  def multipackage_remove(name, &block)
+    Chef::Log.deprecation(
+      "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
+    )
+    params = get_params(&block)
+    params[:name] = name
+    params[:action] = :remove
+    multipackage_definition_impl(params)
+  end
+
+  def get_params(&block)
+    params = MultipackageMash.new
+    params.instance_eval(&block) if block_given?
+    params
+  end
+
   def multipackage_definition_impl(params)
     # @todo make sure package_names and versions have the same # of items
     # (unless verison is omitted)
