@@ -3,7 +3,7 @@ class MultipackageParams
     @name = name
   end
 
-  [ :name, :package_name, :options, :action, :timeout, :version ].each do |sym|
+  [:name, :package_name, :options, :action, :timeout, :version].each do |sym|
     attr_accessor sym
     define_method sym do |*args|
       if args.length == 0
