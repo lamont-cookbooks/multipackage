@@ -1,25 +1,23 @@
-class MultipackageMash < BasicObject
-  def initialize
-    @__object = {}
+class MultipackageParams
+  def initialize(name)
+    @name = name
   end
 
-  def []=(key, value)
-    @__object[key] = value
-  end
-
-  def [](key)
-    @__object[key]
-  end
-
-  def method_missing(sym, *args)
-    @__object[sym] = ( args.length == 1 ? args[0] : args )
+  [ :name, :package_name, :options, :action, :timeout, :version ].each do |sym|
+    attr_accessor sym
+    define_method sym do |*args|
+      if args.length == 0
+        instance_variable_get(:"@#{sym}")
+      else
+        instance_variable_set(:"@#{sym}", ((args.length == 1) ? args[0] : args))
+      end
+    end
   end
 end
 
 module MultipackageDefinitionImpl
   def multipackage(name, &block)
-    params = get_params(&block)
-    params[:name] = name
+    params = get_params(name, &block)
     multipackage_definition_impl(params)
   end
 
@@ -27,9 +25,8 @@ module MultipackageDefinitionImpl
     Chef::Log.deprecation(
       "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
     )
-    params = get_params(&block)
-    params[:name] = name
-    params[:action] = :install
+    params = get_params(name, &block)
+    params.action = :install
     multipackage_definition_impl(params)
   end
 
@@ -37,14 +34,13 @@ module MultipackageDefinitionImpl
     Chef::Log.deprecation(
       "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
     )
-    params = get_params(&block)
-    params[:name] = name
-    params[:action] = :remove
+    params = get_params(name, &block)
+    params.action = :remove
     multipackage_definition_impl(params)
   end
 
-  def get_params(&block)
-    params = MultipackageMash.new
+  def get_params(name, &block)
+    params = MultipackageParams.new(name)
     params.instance_eval(&block) if block_given?
     params
   end
@@ -53,13 +49,13 @@ module MultipackageDefinitionImpl
     # @todo make sure package_names and versions have the same # of items
     # (unless verison is omitted)
     package_names = []
-    if params[:package_name] || params[:name]
-      package_names = [params[:package_name] || params[:name]].flatten
+    if params.package_name || params.name
+      package_names = [params.package_name || params.name].flatten
     end
-    versions = [params[:version]].flatten if params[:version]
-    options = params[:options]
-    timeout = params[:timeout]
-    action = params[:action] || :install
+    versions = [params.version].flatten if params.version
+    options = params.options
+    timeout = params.timeout
+    action = params.action || :install
 
     t = begin
           resources(:multipackage_internal => "collected packages #{action}")
