@@ -21,5 +21,7 @@ platforms:
   - name: freebsd-10.2
 
 suites:
-  - name: default
-    run_list: fake::default
+  - name: functional
+    run_list: fake::functional
+  - name: lwrp
+    run_list: fake::lwrp

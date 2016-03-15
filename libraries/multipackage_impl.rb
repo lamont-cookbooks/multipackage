@@ -95,3 +95,5 @@ module MultipackageDefinitionImpl
 end
 
 Chef::Recipe.send(:include, MultipackageDefinitionImpl)
+Chef::Provider::LWRPBase.send(:include, MultipackageDefinitionImpl)
+Chef::Provider::InlineResources.send(:include, MultipackageDefinitionImpl) if defined?(Chef::Provider::InlineResources)
