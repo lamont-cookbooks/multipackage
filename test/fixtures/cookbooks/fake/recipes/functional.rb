@@ -45,3 +45,9 @@ ruby_block "validate packages installed 2" do
     end
   end
 end
+
+# this makes sure we can use a 'timeout' parameter
+multipackage package_list do
+  action :upgrade
+  timeout 480
+end

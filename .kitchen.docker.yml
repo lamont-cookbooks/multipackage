@@ -35,4 +35,4 @@ platforms:
 
 suites:
   - name: default
-    run_list: fake::default
+    run_list: fake::functional
