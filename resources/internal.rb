@@ -73,4 +73,4 @@ action_class do
     ( test.is_a?(Chef::Resource::YumPackage) && !action == :remove) ||
       test.is_a?(Chef::Resource::AptPackage)
   end
-EOM
+end
