@@ -5,7 +5,7 @@ provisioner:
   name: chef_github
   github_owner: "chef"
   github_repo: "chef"
-  refname: "lcg/extract-declare-resource-mixin"
+  refname: "master"
   client_rb:
     diff_disabled: true
 
