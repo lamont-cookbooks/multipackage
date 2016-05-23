@@ -10,4 +10,4 @@ name "multipackage"
 
 depends "compat_resource"
 
-chef_version ">= 12.0.0" if respond_to?(:chef_version)
+chef_version ">= 12.0.3" if respond_to?(:chef_version)

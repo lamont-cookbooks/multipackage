@@ -2,9 +2,10 @@ require "spec_helper"
 
 describe "default recipe on Ubuntu 14.04" do
   let(:chef_run) do
-    ChefSpec::ServerRunner.new do |node|
-      node.automatic[:lsb][:codename] = "trusty"
-    end.converge("fake::default")
+    ChefSpec::ServerRunner.new(
+      platform: "ubuntu",
+      version: "14.04"
+    ).converge("fake::default")
   end
 
   it "converges successfully" do
