@@ -33,10 +33,11 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - bundle install --jobs=3 --retry=3
+
 script:
-  - /opt/chefdk/embedded/bin/finstyle
-  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
-  - /opt/chefdk/embedded/bin/rspec
+  - bundle exec lcgstyle
+  - bundle exec foodcritic . --exclude spec
+  - bundle exec rspec
   - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 branches:
