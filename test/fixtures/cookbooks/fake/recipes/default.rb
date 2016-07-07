@@ -14,7 +14,7 @@ package_list = package_list_one + package_list_two
 
 multipackage package_list_one
 
-multipackage_install package_list_two
+multipackage_internal package_list_two
 
 ruby_block "validate packages installed 1" do
   block do
@@ -25,7 +25,7 @@ ruby_block "validate packages installed 1" do
 end
 
 multipackage package_list do
-  action :remove
+  action :purge
 end
 
 ruby_block "validate packages removed 1" do

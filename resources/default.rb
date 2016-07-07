@@ -2,7 +2,7 @@ default_action :install
 
 provides :multipackage
 
-property :package_name, [String, Array], coerce: proc { |x| [x].flatten }, name_property: true
+property :package_name, [String, Array], coerce: proc { |x| [x.is_a?(String) ? x.split(", ") : x ].flatten }, name_property: true
 property :version, [String, Array], coerce: proc { |x| [x].flatten }
 property :options, String
 property :timeout, [String, Integer]
