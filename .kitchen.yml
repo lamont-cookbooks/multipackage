@@ -2,10 +2,7 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_github
-  github_owner: "chef"
-  github_repo: "chef"
-  refname: "master"
+  name: chef_zero
   client_rb:
     diff_disabled: true
 
