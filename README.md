@@ -16,8 +16,8 @@
 
 * The last version of this that supported Chef 11.x was 2.0.4
 
-Note that in that version you have to use `multipackage_install` to do scatter-gather and `multipackage`
-is the resource which was renamed to `multipackage_internal`.
+Note that in that version you would have used `multipackage_install` to do scatter-gather instead of
+`multipackage` since the API changed.
 
 ## Description
 
