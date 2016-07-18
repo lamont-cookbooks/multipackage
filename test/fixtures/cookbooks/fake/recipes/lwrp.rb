@@ -1,4 +1,3 @@
-
-multipackage "git"
-multipackage "nmap"
-multipackage "mtr"
+fake "git"
+fake "nmap"
+fake "mtr"

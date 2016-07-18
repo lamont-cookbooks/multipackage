@@ -2,7 +2,8 @@
 module MultiPackageHelper
   include Chef::DSL::Recipe
   def package_installed?(package)
-    !build_resource(:package, package).current_value.version.nil?
+    v = build_resource(:package, package).current_value.version
+    ![ v ].flatten.compact.empty?
   end
 end
 

@@ -69,4 +69,5 @@ def after_created
   Array(action).each do |action|
     run_action(action)
   end
+  action :nothing # don't run twice
 end
