@@ -28,7 +28,7 @@ module MultipackageDefinitionImpl
     end
     versions = [params[:version]].flatten if params[:version]
     options = params[:options]
-    timeout = params[:timeout]
+    timeout = params[:per_package_timeout]
     action = params[:action] || :install
 
     t = begin
@@ -62,7 +62,7 @@ module MultipackageDefinitionImpl
     end
 
     t.options(options) if options
-    t.timeout(timeout) if timeout
+    t.per_package_timeout(timeout) if timeout
 
     t
   end
