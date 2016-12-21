@@ -33,6 +33,15 @@ module MultipackageDefinitionImpl
 
     t = begin
           # non-delayed eager accumulators like this cannot use recursive search
+          #
+          # If we are being called from within a custom resource and use
+          # recursive search and find a resource in an outer run context, then
+          # we always get the use case wrong because if ...
+          # - we happen to find a resource "before" us, then it's already been
+          #   converged and appending to it will do nothing.
+          # - we happen to find a resource "after" us, then the package will be
+          #   installed after the entire custom resource breaking ordering.
+          #
           run_context.resource_collection.find_local(:multipackage_internal => "collected packages #{action}")
         rescue Chef::Exceptions::ResourceNotFound
           multipackage_internal "collected packages #{action}" do
