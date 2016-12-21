@@ -12,9 +12,7 @@ package_list_one = %w{tcpdump unzip}
 package_list_two = %w{lsof zsh}
 package_list = package_list_one + package_list_two
 
-multipackage package_list_one
-
-multipackage_install package_list_two
+multipackage package_list
 
 ruby_block "validate packages installed 1" do
   block do
