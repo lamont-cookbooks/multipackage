@@ -32,6 +32,7 @@ module MultipackageDefinitionImpl
     action = params[:action] || :install
 
     t = begin
+          # non-delayed eager accumulators like this cannot use recursive search
           run_context.resource_collection.find_local(:multipackage_internal => "collected packages #{action}")
         rescue Chef::Exceptions::ResourceNotFound
           multipackage_internal "collected packages #{action}" do
