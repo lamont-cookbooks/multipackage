@@ -2,22 +2,6 @@ define :multipackage do # ~FC015
   multipackage_definition_impl(params)
 end
 
-define :multipackage_install do # ~FC015
-  Chef::Log.deprecation(
-    "The `multipackage_install` definition is deprecated, just use `multipackage` from now on"
-  )
-  params[:action] = :install
-  multipackage_definition_impl(params)
-end
-
-define :multipackage_remove do # ~FC015
-  Chef::Log.deprecation(
-    "The `multipackage_remove` definition is deprecated, just use `multipackage` from now on"
-  )
-  params[:action] = :remove
-  multipackage_definition_impl(params)
-end
-
 module MultipackageDefinitionImpl
   def multipackage_definition_impl(params)
     # @todo make sure package_names and versions have the same # of items
