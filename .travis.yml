@@ -3,7 +3,7 @@ cache:
   directories:
     - $HOME/.chefdk
 
-rvm: 2.2
+rvm: 2.3.3
 
 # sudo required for hacky docker iptables fix
 sudo: required
