@@ -32,7 +32,7 @@ module MultipackageDefinitionImpl
     action = params[:action] || :install
 
     t = begin
-          resources(:multipackage_internal => "collected packages #{action}")
+          run_context.resource_collection.find_local(:multipackage_internal => "collected packages #{action}")
         rescue Chef::Exceptions::ResourceNotFound
           multipackage_internal "collected packages #{action}" do
             package_name Array.new
