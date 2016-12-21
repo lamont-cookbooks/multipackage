@@ -1,8 +1,15 @@
 
+apt_update "doit"
+
 module MultiPackageHelper
   include Chef::DSL::Recipe
   def package_installed?(package)
-    !build_resource(:package, package).current_value.version.nil?
+    version = build_resource(:package, package).current_value.version
+    if version.is_a?(Array)
+      !version.compact.empty?
+    else
+      !version.nil?
+    end
   end
 end
 
@@ -28,6 +35,8 @@ end
 
 ruby_block "validate packages removed 1" do
   block do
+    pp package_installed?("tcpdump")
+    pp build_resource(:package, "tcpdump").current_value
     package_list.each do |pkg|
       raise "#{pkg} not removed" if package_installed?(pkg)
     end

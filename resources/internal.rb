@@ -64,7 +64,7 @@ def singlepackage_resources(new_resource, action)
 end
 
 def do_action(new_resource, action)
-  if multipackage_supported?
+  if multipackage_supported?(action)
     begin
       multipackage_resource(new_resource, action)
     rescue Chef::Exceptions::ValidationFailed
@@ -75,8 +75,8 @@ def do_action(new_resource, action)
   end
 end
 
-def multipackage_supported?
-  test = build_resource(:package, "anything")
-  (test.is_a?(Chef::Resource::YumPackage) && action != :remove) ||
-    test.is_a?(Chef::Resource::AptPackage)
+def multipackage_supported?(action)
+  klass = Chef::Resource.resource_for_node(:package, node)
+  (klass == Chef::Resource::YumPackage && action != :remove) ||
+    klass == Chef::Resource::AptPackage
 end
