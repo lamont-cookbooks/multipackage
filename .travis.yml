@@ -1,20 +1,12 @@
 language: ruby
-cache:
-  directories:
-    - $HOME/.chefdk
+cache: bundler
 
-rvm: 2.2
+dist: trusty
+
+rvm: 2.3.3
 
 # sudo required for hacky docker iptables fix
 sudo: required
-
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
-addons:
-  apt:
-    sources:
-      - chef-current-precise
-    packages:
-      - chefdk
 
 services: docker
 
@@ -24,20 +16,15 @@ env:
   - INSTANCE=default-ubuntu-1204
   - INSTANCE=default-centos-71
 
-# Don't `bundle install` into system ruby
-install: echo "skip bundle install"
-
 # Ensure we make ChefDK's Ruby the default
 before_script:
   # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - bundle install --jobs=3 --retry=3
 script:
-  - /opt/chefdk/embedded/bin/finstyle
-  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
-  - /opt/chefdk/embedded/bin/rspec
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+  - bundle exec finstyle
+  - bundle exec foodcritic . --exclude spec
+  - bundle exec rspec
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen verify ${INSTANCE}
 
 branches:
   only:
