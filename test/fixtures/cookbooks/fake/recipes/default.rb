@@ -1,4 +1,6 @@
 
+apt_update "doit"
+
 module MultiPackageHelper
   include Chef::DSL::Recipe
   def package_installed?(package)
