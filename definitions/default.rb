@@ -42,11 +42,11 @@ module MultipackageDefinitionImpl
           # - we happen to find a resource "after" us, then the package will be
           #   installed after the entire custom resource breaking ordering.
           #
-          run_context.resource_collection.find_local(:multipackage_internal => "collected packages #{action}")
+          run_context.resource_collection.find_local(multipackage_internal: "collected packages #{action}")
         rescue Chef::Exceptions::ResourceNotFound
           multipackage_internal "collected packages #{action}" do
-            package_name Array.new
-            version Array.new
+            package_name []
+            version []
             action action
           end
         end

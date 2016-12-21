@@ -21,7 +21,7 @@ before_script:
   # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
 script:
-  - bundle exec finstyle
+  - bundle exec chefstyle
   - bundle exec foodcritic . --exclude spec
   - bundle exec rspec
   - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen verify ${INSTANCE}
