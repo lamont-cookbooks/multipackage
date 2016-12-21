@@ -78,5 +78,5 @@ end
 def multipackage_supported?(action)
   klass = Chef::Resource.resource_for_node(:package, node)
   (klass == Chef::Resource::YumPackage && action != :remove) ||
-    (klass == Chef::Resource::AptPackage && action != :remove)
+    klass == Chef::Resource::AptPackage
 end
