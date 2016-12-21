@@ -24,7 +24,7 @@ script:
   - bundle exec finstyle
   - bundle exec foodcritic . --exclude spec
   - bundle exec rspec
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bunld exec kitchen verify ${INSTANCE}
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen verify ${INSTANCE}
 
 branches:
   only:
