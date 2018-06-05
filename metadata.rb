@@ -5,7 +5,7 @@ source_url "https://github.com/lamont-cookbooks/multipackage"
 issues_url "https://github.com/lamont-cookbooks/multipackage/issues"
 description "Accumulated installation of multiple packages across multiple cookbooks"
 long_description "Accumulated installation of multiple packages across multiple cookbooks"
-version "5.0.0"
+version "5.0.1"
 name "multipackage"
 
 supports "any"
