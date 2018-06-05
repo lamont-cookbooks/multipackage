@@ -5,16 +5,15 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-5.11
-  - name: centos-6.7
-  - name: centos-7.1
-  - name: debian-7.8
-  - name: debian-8.1
-  - name: fedora-21
-  - name: ubuntu-12.04
+  - name: centos-6
+  - name: centos-7
+  - name: debian-8
+  - name: debian-9
+  - name: fedora-27
   - name: ubuntu-14.04
-  - name: freebsd-9.3
-  - name: freebsd-10.2
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+  - name: freebsd-11
 
 suites:
   - name: default
