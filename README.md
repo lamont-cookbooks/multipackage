@@ -13,7 +13,7 @@
 
 This cookbook supplies a resource `multipackage_internal` which provides a backwards-compatibility layer around supplying an array of packages to the package resource which was introduced in Chef 12.1.0\. By using this resource a cookbook will execute a single resource with an array argument, but will dispatch multiple resources to handle each individual resource to maintain compatibility with previous versions of Chef. You should not use it, instead use the `multipackage` definition.
 
-This cookbook also supplies a definition `multipackage` which wraps `multipackage` with additional functionality not present in core chef which implements an accumulator pattern to gather packages from many different cookbooks and install them in a single resource call (assuming it runs on Chef 12.1.0 or greater).
+This cookbook also supplies a definition `multipackage` which wraps `multipackage` with additional functionality not present in core chef which implements an accumulator pattern to gather packages from many different cookbooks and install them in a single resource call.
 
 ## Supports
 
@@ -49,7 +49,7 @@ end
 - `:reconfig` - reconfigure the packages
 - `:purge` - purge the packages
 
-#### Parameters
+#### Properties
 
 - `package_name` - This must be an array
 - `version` - This must be an array and, if present, must have the same number of elements as `package_name`
@@ -113,7 +113,7 @@ None
 
 ## Usage
 
-Put 'depends multipackage' in your metadata.rb to gain access to the LWRP and definition in your code.
+Put 'depends multipackage' in your metadata.rb to gain access to the resource and definition in your code.
 
 ## NOTE on Using Definitions
 
